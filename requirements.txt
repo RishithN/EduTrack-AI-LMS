@@ -1,0 +1,19 @@
+# Express & Backend Core
+express==4.19.2
+mongoose==8.3.4
+cors==2.8.5
+dotenv==16.4.5
+
+# Authentication & Security
+bcryptjs==3.0.3
+jsonwebtoken==9.0.3
+
+# File Processing & AI Modules
+multer==2.0.2
+pdf-parse==1.1.1
+@google/generative-ai==0.24.1
+
+# TypeScript & Development
+typescript==5.4.5
+ts-node==10.9.2
+nodemon==3.1.0

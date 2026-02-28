@@ -1,0 +1,12 @@
+{
+    "name": "edutrack-monorepo",
+    "version": "1.0.0",
+    "scripts": {
+        "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+        "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+        "build": "cd client && npm run build && cd ../server && npm run build"
+    },
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
