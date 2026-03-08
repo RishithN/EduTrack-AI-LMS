@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -16,11 +16,11 @@ import {
     Trophy,
     BrainCircuit,
     BarChart3,
-
     MessageSquare,
     Calendar,
     Clock,
-
+    Users,
+    ShieldAlert
 } from 'lucide-react';
 
 interface SidebarItem {
@@ -41,6 +41,7 @@ const studentItems: SidebarItem[] = [
     { label: 'Report Card', icon: Award, path: '/student/report-card' },
     { label: 'Career AI', icon: GraduationCap, path: '/student/career' },
     { label: 'Innovation Hub', icon: Lightbulb, path: '/student/innovation' },
+    { label: 'Mentorship', icon: Users, path: '/student/mentorship' },
     { label: 'Leaderboard', icon: Trophy, path: '/student/gamification' },
     { label: 'Profile', icon: User, path: '/student/profile' },
 ];
@@ -53,6 +54,8 @@ const teacherItems: SidebarItem[] = [
     { label: 'Quiz Gen AI', icon: BrainCircuit, path: '/teacher/quiz-gen' },
     { label: 'Idea Review', icon: Lightbulb, path: '/teacher/idea-review' },
     { label: 'Analytics', icon: BarChart3, path: '/teacher/analytics' },
+    { label: 'Plagiarism Tracker', icon: ShieldAlert, path: '/teacher/plagiarism' },
+    { label: 'Mentorship', icon: Users, path: '/teacher/mentorship' },
     { label: 'Communication', icon: MessageSquare, path: '/teacher/communication' },
     { label: 'Calendar', icon: Calendar, path: '/teacher/calendar' },
 ];
@@ -69,11 +72,18 @@ const parentItems: SidebarItem[] = [
 
 const DashboardLayout = ({ children, role = 'student' }: { children: React.ReactNode, role?: 'student' | 'teacher' | 'parent' }) => {
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const navRef = useRef<HTMLElement>(null);
 
-    // Always use dark mode
     useEffect(() => {
-        document.documentElement.classList.add('dark');
+        const savedScroll = sessionStorage.getItem('sidebarScrollPos');
+        if (navRef.current && savedScroll) {
+            navRef.current.scrollTop = parseInt(savedScroll, 10);
+        }
     }, []);
+
+    const handleNavScroll = (e: React.UIEvent<HTMLElement>) => {
+        sessionStorage.setItem('sidebarScrollPos', e.currentTarget.scrollTop.toString());
+    };
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -107,7 +117,11 @@ const DashboardLayout = ({ children, role = 'student' }: { children: React.React
                     </button>
                 </div>
 
-                <nav className="flex-1 overflow-y-auto py-4">
+                <nav
+                    ref={navRef}
+                    onScroll={handleNavScroll}
+                    className="flex-1 overflow-y-auto py-4"
+                >
                     <ul className="space-y-2 px-2">
                         {navItems.map((item) => {
                             const isActive = location.pathname === item.path;

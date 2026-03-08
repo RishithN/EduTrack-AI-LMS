@@ -41,7 +41,7 @@ const CourseList = () => {
                         <div className="mt-4 h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                             <div className="h-full bg-blue-600 dark:bg-blue-500 rounded-full" style={{ width: `${course.completion}%` }} />
                         </div>
-                        <div className="mt-2 text-xs text-right text-slate-400 dark:text-slate-400">{course.completion}% Completed</div>
+                        <div className="mt-2 text-xs text-right text-slate-600 dark:text-slate-400 dark:text-slate-400">{course.completion}% Completed</div>
                     </div>
                 ))}
             </div>
@@ -61,7 +61,7 @@ const CourseList = () => {
                                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{selectedCourse.name}</h2>
                                 <p className="text-slate-500 dark:text-slate-400">CSE Core Course</p>
                             </div>
-                            <button onClick={() => setSelectedCourse(null)} className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                            <button onClick={() => setSelectedCourse(null)} className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <X size={24} />
                             </button>
                         </div>
@@ -88,7 +88,7 @@ const CourseList = () => {
                             <div className="pt-4">
                                 <button
                                     onClick={() => setSelectedCourse(null)}
-                                    className="w-full bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                                    className="w-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white px-4 py-2 rounded-lg font-medium transition-colors"
                                 >
                                     Close
                                 </button>

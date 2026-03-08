@@ -17,8 +17,8 @@ export interface ChatMessage {
 }
 
 const STORAGE_KEYS = {
-    MEETINGS: 'edutrack_meetings',
-    CHAT: 'edutrack_chat'
+    MEETINGS: 'edutrack_meetings_v2',
+    CHAT: 'edutrack_chat_v2'
 };
 
 // Initial Mock Data to populate if empty
@@ -28,8 +28,48 @@ const INITIAL_MEETINGS: MeetingRequest[] = [
         parentName: 'Mr. Verma',
         studentName: 'Arjun Verma',
         reason: 'Academic Performance',
-        date: '2024-03-20',
+        date: '2026-03-15',
         time: '10:00',
+        status: 'pending',
+        requestDate: new Date().toISOString()
+    },
+    {
+        id: 1700000000001,
+        parentName: 'Mrs. Sharma',
+        studentName: 'Rahul Sharma',
+        reason: 'Attendance Issue',
+        date: '2026-03-16',
+        time: '14:30',
+        status: 'pending',
+        requestDate: new Date().toISOString()
+    },
+    {
+        id: 1700000000002,
+        parentName: 'Mr. Gupta',
+        studentName: 'Sneha Gupta',
+        reason: 'Behavioral Concern',
+        date: '2026-03-17',
+        time: '11:15',
+        status: 'pending',
+        requestDate: new Date().toISOString()
+    },
+    {
+        id: 1700000000003,
+        parentName: 'Mrs. Iyer',
+        studentName: 'Karthik Iyer',
+        reason: 'General Update',
+        date: '2026-03-18',
+        time: '15:45',
+        status: 'pending',
+        requestDate: new Date().toISOString()
+    },
+    {
+        id: 1700000000004,
+        parentName: 'Mr. Singh',
+        studentName: 'Vikram Singh',
+        reason: 'Academic Performance',
+        date: '2026-03-20',
+        time: '09:30',
         status: 'pending',
         requestDate: new Date().toISOString()
     }

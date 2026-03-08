@@ -153,8 +153,8 @@ const TeacherAssignments = () => {
             <div className="space-y-8">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-bold text-white">Assignment Management</h1>
-                        <p className="text-slate-400">Create, edit and grade student assignments.</p>
+                        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Assignment Management</h1>
+                        <p className="text-slate-600 dark:text-slate-400">Create, edit and grade student assignments.</p>
                     </div>
                     <button
                         onClick={() => {
@@ -162,7 +162,7 @@ const TeacherAssignments = () => {
                             setIsEditing(false);
                             setFormData({ title: '', subject: 'CS201', deadline: '', points: 10, description: '' });
                         }}
-                        className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
+                        className="bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
                     >
                         <Plus size={20} /> Create Assignment
                     </button>
@@ -170,26 +170,26 @@ const TeacherAssignments = () => {
 
                 {/* Create/Edit Form */}
                 {showForm && (
-                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl animate-in fade-in slide-in-from-top-4">
-                        <h3 className="text-xl font-bold text-white mb-4">{isEditing ? 'Edit Assignment' : 'Create New Assignment'}</h3>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl animate-in fade-in slide-in-from-top-4">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">{isEditing ? 'Edit Assignment' : 'Create New Assignment'}</h3>
                         <form className="space-y-4">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-sm text-slate-400">Title</label>
+                                    <label className="text-sm text-slate-600 dark:text-slate-400">Title</label>
                                     <input
                                         type="text"
                                         value={formData.title}
                                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="e.g. Binary Trees"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-sm text-slate-400">Subject Code</label>
+                                    <label className="text-sm text-slate-600 dark:text-slate-400">Subject Code</label>
                                     <select
                                         value={formData.subject}
                                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                     >
                                         <option>CS201 - Data Structures</option>
                                         <option>CS203 - DBMS</option>
@@ -200,47 +200,47 @@ const TeacherAssignments = () => {
 
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-sm text-slate-400">Deadline</label>
+                                    <label className="text-sm text-slate-600 dark:text-slate-400">Deadline</label>
                                     <input
                                         type="date"
                                         value={formData.deadline}
                                         onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-sm text-slate-400">Points</label>
+                                    <label className="text-sm text-slate-600 dark:text-slate-400">Points</label>
                                     <input
                                         type="number"
                                         value={formData.points}
                                         onChange={(e) => setFormData({ ...formData, points: parseInt(e.target.value) })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="text-sm text-slate-400">Description</label>
+                                <label className="text-sm text-slate-600 dark:text-slate-400">Description</label>
                                 <textarea
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none h-24"
+                                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none h-24"
                                     placeholder="Assignment details..."
                                 />
                             </div>
 
                             <div className="flex items-center gap-4">
-                                <button type="button" className="flex items-center gap-2 px-4 py-2 border border-dashed border-slate-700 rounded-lg text-slate-400 hover:text-white hover:border-slate-500 transition-colors">
+                                <button type="button" className="flex items-center gap-2 px-4 py-2 border border-dashed border-slate-300 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-slate-500 transition-colors">
                                     <Upload size={18} /> Attach File (PDF/Doc)
                                 </button>
                             </div>
 
-                            <div className="flex justify-end gap-3 pt-4 border-t border-slate-800 mt-4">
-                                <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-400 hover:text-white">Cancel</button>
+                            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 mt-4">
+                                <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white">Cancel</button>
                                 <button
                                     type="button"
                                     onClick={handlePublish}
-                                    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium"
+                                    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white rounded-lg font-medium"
                                 >
                                     {isEditing ? 'Update Assignment' : 'Publish Assignment'}
                                 </button>
@@ -250,9 +250,9 @@ const TeacherAssignments = () => {
                 )}
 
                 {/* Assignments List */}
-                <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
                     <table className="w-full text-left">
-                        <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
+                        <thead className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
                             <tr>
                                 <th className="p-4 font-medium">Assignment</th>
                                 <th className="p-4 font-medium">Subject</th>
@@ -266,17 +266,17 @@ const TeacherAssignments = () => {
                                 <tr
                                     key={assign.id}
                                     onClick={() => setSelectedAssignment(assign)}
-                                    className="hover:bg-slate-800/50 transition-colors cursor-pointer"
+                                    className="hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors cursor-pointer"
                                 >
                                     <td className="p-4">
-                                        <div className="font-medium text-white">{assign.title}</div>
+                                        <div className="font-medium text-slate-900 dark:text-white">{assign.title}</div>
                                     </td>
-                                    <td className="p-4 text-slate-400 font-mono">{assign.subject}</td>
-                                    <td className="p-4 text-slate-300 flex items-center gap-2">
+                                    <td className="p-4 text-slate-600 dark:text-slate-400 font-mono">{assign.subject}</td>
+                                    <td className="p-4 text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                         <Calendar size={16} className="text-slate-500" /> {assign.deadline}
                                     </td>
                                     <td className="p-4">
-                                        <div className="w-32 h-2 bg-slate-950 rounded-full overflow-hidden mb-1">
+                                        <div className="w-32 h-2 bg-slate-50 dark:bg-slate-950 rounded-full overflow-hidden mb-1">
                                             <div
                                                 className="h-full bg-blue-500"
                                                 style={{ width: `${(assign.submissions / assign.total) * 100}%` }}
@@ -297,7 +297,7 @@ const TeacherAssignments = () => {
                                             </button>
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); handleEdit(assign); }}
-                                                className="p-2 hover:bg-slate-800 text-slate-400 rounded-lg transition-colors"
+                                                className="p-2 hover:bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg transition-colors"
                                                 title="Edit"
                                             >
                                                 <Edit size={18} />
@@ -320,15 +320,15 @@ const TeacherAssignments = () => {
                 {/* Assignment Detail Modal */}
                 {selectedAssignment && (
                     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto">
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto">
                             <div className="flex justify-between items-start mb-6">
                                 <div>
-                                    <h2 className="text-3xl font-bold text-white mb-2">{selectedAssignment.title}</h2>
-                                    <p className="text-slate-400">{selectedAssignment.subject}</p>
+                                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{selectedAssignment.title}</h2>
+                                    <p className="text-slate-600 dark:text-slate-400">{selectedAssignment.subject}</p>
                                 </div>
                                 <button
                                     onClick={() => setSelectedAssignment(null)}
-                                    className="text-slate-400 hover:text-white"
+                                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                                 >
                                     <Plus size={24} className="rotate-45" />
                                 </button>
@@ -336,19 +336,19 @@ const TeacherAssignments = () => {
 
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-slate-950 p-4 rounded-lg border border-slate-800">
-                                        <div className="text-slate-400 text-sm mb-1">Deadline</div>
-                                        <div className="text-xl font-bold text-white">{selectedAssignment.deadline}</div>
+                                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+                                        <div className="text-slate-600 dark:text-slate-400 text-sm mb-1">Deadline</div>
+                                        <div className="text-xl font-bold text-slate-900 dark:text-white">{selectedAssignment.deadline}</div>
                                     </div>
-                                    <div className="bg-slate-950 p-4 rounded-lg border border-slate-800">
-                                        <div className="text-slate-400 text-sm mb-1">Submissions</div>
-                                        <div className="text-xl font-bold text-white">{currentAssignmentSubmissions.length}/{selectedAssignment.total}</div>
+                                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+                                        <div className="text-slate-600 dark:text-slate-400 text-sm mb-1">Submissions</div>
+                                        <div className="text-xl font-bold text-slate-900 dark:text-white">{currentAssignmentSubmissions.length}/{selectedAssignment.total}</div>
                                     </div>
                                 </div>
 
                                 <div>
                                     <div className="flex justify-between items-center mb-3">
-                                        <h3 className="text-lg font-semibold text-white">
+                                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                                             {showAllSubmissions ? 'All Submissions' : `Recent Submissions (Showing 3 of ${currentAssignmentSubmissions.length})`}
                                         </h3>
                                         {showAllSubmissions && (
@@ -364,13 +364,13 @@ const TeacherAssignments = () => {
                                     <div className="space-y-2">
                                         {currentAssignmentSubmissions.length > 0 ? (
                                             currentAssignmentSubmissions.slice(0, showAllSubmissions ? undefined : 3).map((sub: any) => (
-                                                <div key={sub.id} className="bg-slate-950 p-4 rounded-lg border border-slate-800 flex items-center justify-between">
+                                                <div key={sub.id} className="bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
-                                                        <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-white">
+                                                        <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-slate-900 dark:text-white">
                                                             {sub.studentName.charAt(0)}
                                                         </div>
                                                         <div>
-                                                            <div className="text-white font-medium">{sub.studentName}</div>
+                                                            <div className="text-slate-900 dark:text-white font-medium">{sub.studentName}</div>
                                                             <div className="text-xs text-slate-500">{sub.studentId} • Submitted: {sub.submittedDate}</div>
                                                         </div>
                                                     </div>
@@ -385,7 +385,7 @@ const TeacherAssignments = () => {
                                                                     setSelectedSubmission(sub);
                                                                     setShowGradingModal(true);
                                                                 }}
-                                                                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors"
+                                                                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white rounded-lg text-sm font-medium transition-colors"
                                                             >
                                                                 Grade Now
                                                             </button>
@@ -409,10 +409,10 @@ const TeacherAssignments = () => {
                                     </div>
                                 </div>
 
-                                <div className="pt-4 border-t border-slate-800 mt-4">
+                                <div className="pt-4 border-t border-slate-200 dark:border-slate-800 mt-4">
                                     <button
                                         onClick={() => setSelectedAssignment(null)}
-                                        className="w-full bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-4 py-2 rounded-lg font-medium transition-colors"
                                     >
                                         Close
                                     </button>
@@ -425,21 +425,21 @@ const TeacherAssignments = () => {
                 {/* Grading Modal */}
                 {showGradingModal && selectedSubmission && (
                     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
-                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                            <h2 className="text-2xl font-bold text-white mb-4">Grade Submission</h2>
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Grade Submission</h2>
                             <div className="mb-4">
-                                <div className="text-slate-400 mb-2">Student: <span className="text-white font-medium">{selectedSubmission.studentName}</span></div>
-                                <div className="text-slate-400 mb-4">ID: <span className="text-white font-medium">{selectedSubmission.studentId}</span></div>
+                                <div className="text-slate-600 dark:text-slate-400 mb-2">Student: <span className="text-slate-900 dark:text-white font-medium">{selectedSubmission.studentName}</span></div>
+                                <div className="text-slate-600 dark:text-slate-400 mb-4">ID: <span className="text-slate-900 dark:text-white font-medium">{selectedSubmission.studentId}</span></div>
                             </div>
 
                             {/* Sample Submission */}
-                            <div className="mb-6 bg-slate-950 p-4 rounded-lg border border-slate-800">
-                                <h3 className="text-sm font-semibold text-slate-400 mb-2">Submitted Work Sample:</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">{selectedSubmission.sampleWork}</p>
+                            <div className="mb-6 bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+                                <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-2">Submitted Work Sample:</h3>
+                                <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">{selectedSubmission.sampleWork}</p>
                             </div>
 
                             <div className="mb-6">
-                                <label className="text-sm text-slate-400 mb-2 block">Grade (out of 100)</label>
+                                <label className="text-sm text-slate-600 dark:text-slate-400 mb-2 block">Grade (out of 100)</label>
                                 <input
                                     type="number"
                                     value={currentGrade}
@@ -447,7 +447,7 @@ const TeacherAssignments = () => {
                                     min="0"
                                     max="100"
                                     placeholder="Enter grade..."
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-3 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                             </div>
 
@@ -458,13 +458,13 @@ const TeacherAssignments = () => {
                                         setCurrentGrade('');
                                         setSelectedSubmission(null);
                                     }}
-                                    className="flex-1 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-colors"
+                                    className="flex-1 px-4 py-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleGradeSubmission}
-                                    className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors"
+                                    className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
                                 >
                                     Submit Grade
                                 </button>

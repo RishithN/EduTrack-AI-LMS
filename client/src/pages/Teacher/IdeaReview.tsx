@@ -241,7 +241,7 @@ const TeacherIdeaReview = () => {
                                 </h3>
 
                                 <div className="flex items-center gap-2 mb-3">
-                                    <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white">
+                                    <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-sm font-bold text-slate-900 dark:text-white">
                                         {idea.studentName?.charAt(0) || 'S'}
                                     </div>
                                     <div>
@@ -266,7 +266,7 @@ const TeacherIdeaReview = () => {
                                     </span>
                                     <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{selectedIdea.title}</h2>
                                     <div className="flex items-center gap-3 mb-4">
-                                        <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-white">
+                                        <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-slate-900 dark:text-white">
                                             {selectedIdea.studentName?.charAt(0) || 'S'}
                                         </div>
                                         <div>
@@ -277,7 +277,7 @@ const TeacherIdeaReview = () => {
                                 </div>
                                 <button
                                     onClick={() => setSelectedIdea(null)}
-                                    className="text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white"
                                 >
                                     <X size={24} />
                                 </button>
@@ -320,7 +320,7 @@ const TeacherIdeaReview = () => {
                                         />
                                         <button
                                             onClick={handleAddComment}
-                                            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors"
+                                            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white rounded-lg text-sm font-medium transition-colors"
                                         >
                                             Comment
                                         </button>
@@ -343,14 +343,14 @@ const TeacherIdeaReview = () => {
                                         <div className="flex gap-3 pt-4">
                                             <button
                                                 onClick={() => handleUpdateStatus('rejected')}
-                                                className="flex-1 px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                                                className="flex-1 px-6 py-3 bg-red-600 hover:bg-red-500 text-slate-900 dark:text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                                             >
                                                 <X size={18} />
                                                 Reject Idea
                                             </button>
                                             <button
                                                 onClick={() => handleUpdateStatus('approved')}
-                                                className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                                                className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                                             >
                                                 <CheckCircle size={18} />
                                                 Approve Idea
@@ -371,7 +371,7 @@ const TeacherIdeaReview = () => {
                                         )}
                                         <button
                                             onClick={() => setSelectedIdea(null)}
-                                            className="w-full px-6 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
+                                            className="w-full px-6 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
                                         >
                                             Close
                                         </button>

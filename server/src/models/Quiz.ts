@@ -5,10 +5,12 @@ export interface IQuiz extends Document {
     subjectCode: string;
     difficulty: 'Easy' | 'Medium' | 'Hard';
     questions: {
-        questionText: string;
+        q: string;
         options: string[];
-        correctIndex: number;
+        ans: number;
         explanation: string;
+        bloomsLevel?: string;
+        type: string;
         marks: number;
     }[];
     createdBy: mongoose.Types.ObjectId; // Teacher
@@ -19,10 +21,12 @@ const QuizSchema: Schema = new Schema({
     subjectCode: { type: String, required: true },
     difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
     questions: [{
-        questionText: { type: String, required: true },
-        options: [{ type: String, required: true }],
-        correctIndex: { type: Number, required: true },
-        explanation: { type: String }, // For auto-grading feedback
+        q: { type: String, required: true },
+        options: [{ type: String }],
+        ans: { type: Number, required: true },
+        explanation: { type: String },
+        bloomsLevel: { type: String },
+        type: { type: String, default: 'mcq' },
         marks: { type: Number, default: 1 }
     }],
     createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true }

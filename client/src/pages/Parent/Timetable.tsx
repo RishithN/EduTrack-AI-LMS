@@ -13,11 +13,11 @@ const ParentTimetable = () => {
         <DashboardLayout role="parent">
             <div className="space-y-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         <Calendar className="text-emerald-500" />
                         Student Timetable
                     </h1>
-                    <p className="text-slate-400">
+                    <p className="text-slate-600 dark:text-slate-400">
                         View your child's schedule and attendance.
                     </p>
                 </div>

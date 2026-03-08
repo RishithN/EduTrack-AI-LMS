@@ -84,7 +84,7 @@ const createSlot = (
         startTime,
         endTime,
         type: isLab ? 'lab' : 'theory',
-        isLaptopRequired: isLab || subjectKey === 'CS205', // Web Dev and Labs need laptops
+        // Laptop requirement removed
         attendanceStatus: status,
     };
 };
@@ -178,7 +178,7 @@ export const getTeacherSchedule = (currentDate: Date): WeekSchedule => {
                     createSlot('mon-1', 'CS201', '09:00', '10:00', weekDays[0]),
                     BREAK,
                     createSlot('mon-lab', 'CS201', '14:00', '16:00', weekDays[0], true),
-                ].map(s => ({ ...s, attendanceStatus: undefined, isLaptopRequired: false })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
+                ].map(s => ({ ...s, attendanceStatus: undefined })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
             },
             {
                 day: 'Tuesday',
@@ -187,7 +187,7 @@ export const getTeacherSchedule = (currentDate: Date): WeekSchedule => {
                     createSlot('tue-1', 'CS202', '09:00', '10:00', weekDays[1]),
                     BREAK,
                     createSlot('tue-4', 'CS201', '13:00', '14:00', weekDays[1]),
-                ].map(s => ({ ...s, attendanceStatus: undefined, isLaptopRequired: false })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
+                ].map(s => ({ ...s, attendanceStatus: undefined })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
             },
             {
                 day: 'Wednesday',
@@ -196,7 +196,7 @@ export const getTeacherSchedule = (currentDate: Date): WeekSchedule => {
                     createSlot('wed-2', 'CS201', '10:00', '11:00', weekDays[2]),
                     BREAK,
                     createSlot('wed-lab', 'CS202', '14:00', '16:00', weekDays[2], true),
-                ].map(s => ({ ...s, attendanceStatus: undefined, isLaptopRequired: false })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
+                ].map(s => ({ ...s, attendanceStatus: undefined })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
             },
             {
                 day: 'Thursday',
@@ -204,7 +204,7 @@ export const getTeacherSchedule = (currentDate: Date): WeekSchedule => {
                 slots: [
                     BREAK,
                     createSlot('thu-5', 'CS201', '14:00', '15:00', weekDays[3]),
-                ].map(s => ({ ...s, attendanceStatus: undefined, isLaptopRequired: false })),
+                ].map(s => ({ ...s, attendanceStatus: undefined })),
             },
             {
                 day: 'Friday',
@@ -212,9 +212,44 @@ export const getTeacherSchedule = (currentDate: Date): WeekSchedule => {
                 slots: [
                     createSlot('fri-3', 'CS202', '11:00', '12:00', weekDays[4]),
                     BREAK,
-                ].map(s => ({ ...s, attendanceStatus: undefined, isLaptopRequired: false })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
+                ].map(s => ({ ...s, attendanceStatus: undefined })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
             },
         ],
     };
 };
+export const getOverallAttendance = () => {
+    const startDate = new Date('2026-01-01T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
+    const attendanceMap: Record<string, { subject: string, name: string, code: string, total: number, attended: number }> = {};
+
+    for (const subject of Object.values(SUBJECTS)) {
+        attendanceMap[subject.code] = { subject: subject.name, name: subject.name, code: subject.code, total: 0, attended: 0 };
+    }
+
+    let currentDate = new Date(startDate);
+
+    while (currentDate < today) {
+        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+            const schedule = getStudentSchedule(currentDate);
+            const daySchedule = schedule.days.find(d => new Date(d.date || '').toDateString() === currentDate.toDateString());
+            if (daySchedule) {
+                daySchedule.slots.forEach(slot => {
+                    if (slot.type !== 'break' && attendanceMap[slot.subjectCode]) {
+                        attendanceMap[slot.subjectCode].total += 1;
+                        if (slot.attendanceStatus === 'attended') {
+                            attendanceMap[slot.subjectCode].attended += 1;
+                        }
+                    }
+                });
+            }
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return Object.values(attendanceMap).map(data => ({
+        ...data,
+        percentage: data.total > 0 ? (data.attended / data.total) * 100 : 0
+    }));
+};

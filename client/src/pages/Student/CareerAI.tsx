@@ -225,7 +225,7 @@ const CareerAI = () => {
                             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                                 AI Career Intelligence Platform
                             </h1>
-                            <p className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
                                 Discover your perfect career path with our adaptive multi-career intelligence system.
                                 We analyze your personality, skills, academic performance, and learning behavior to create
                                 a personalized roadmap.
@@ -233,7 +233,7 @@ const CareerAI = () => {
 
                             <button
                                 onClick={() => setCurrentView('domain-selection')}
-                                className="mt-8 px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-full text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-600/25 flex items-center gap-3 mx-auto"
+                                className="mt-8 px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-slate-900 dark:text-white font-bold rounded-full text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-600/25 flex items-center gap-3 mx-auto"
                             >
                                 Start Your Career Journey <Sparkles size={24} />
                             </button>
@@ -241,13 +241,13 @@ const CareerAI = () => {
 
                         {/* History Section */}
                         {history.length > 0 && (
-                            <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-                                <h3 className="text-xl font-bold text-white mb-4">Your Assessment History</h3>
+                            <div className="bg-slate-100/70 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Your Assessment History</h3>
                                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {history.map((item: any, idx: number) => (
-                                        <div key={idx} className="bg-slate-950 p-4 rounded-lg border border-slate-800 flex justify-between items-center">
+                                        <div key={idx} className="bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800 flex justify-between items-center">
                                             <div>
-                                                <div className="font-bold text-white">{item.domain || "Assessment"}</div>
+                                                <div className="font-bold text-slate-900 dark:text-white">{item.domain || "Assessment"}</div>
                                                 <div className="text-xs text-slate-500">{new Date(item.completedAt).toLocaleDateString()}</div>
                                             </div>
                                             <button
@@ -286,8 +286,8 @@ const CareerAI = () => {
                                 <BrainCircuit className="mx-auto text-purple-500/30" size={80} />
                             </div>
                         </div>
-                        <h2 className="text-3xl font-bold text-white">Analyzing Your Career DNA...</h2>
-                        <p className="text-slate-400">Comparing your profile against industry standards...</p>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Analyzing Your Career DNA...</h2>
+                        <p className="text-slate-600 dark:text-slate-400">Comparing your profile against industry standards...</p>
                     </div>
                 )}
 
@@ -297,19 +297,19 @@ const CareerAI = () => {
                         {/* Header */}
                         <div className="flex justify-between items-center">
                             <div>
-                                <h1 className="text-3xl font-bold text-white mb-2">Your Career Intelligence Report</h1>
-                                <p className="text-slate-400">Based on your assessment for: <span className="text-blue-400">{selectedDomain || "Tech Roles"}</span></p>
+                                <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Your Career Intelligence Report</h1>
+                                <p className="text-slate-600 dark:text-slate-400">Based on your assessment for: <span className="text-blue-400">{selectedDomain || "Tech Roles"}</span></p>
                             </div>
                             <div className="flex gap-3">
                                 <button
                                     onClick={() => setCurrentView('intro')}
-                                    className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-all"
+                                    className="px-4 py-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-all"
                                 >
                                     Back to Home
                                 </button>
                                 <button
                                     onClick={handleStartNew}
-                                    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all shadow-lg shadow-blue-600/20"
+                                    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white rounded-lg transition-all shadow-lg shadow-blue-600/20"
                                 >
                                     New Assessment
                                 </button>
@@ -317,7 +317,7 @@ const CareerAI = () => {
                         </div>
 
                         {/* Tab Navigation */}
-                        <div className="flex gap-2 bg-slate-900/50 p-2 rounded-xl border border-slate-800 overflow-x-auto">
+                        <div className="flex gap-2 bg-slate-100/70 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto">
                             {[
                                 { id: 'overview', label: 'Career Matches', icon: Target },
                                 { id: 'roadmap', label: 'Learning Roadmap', icon: BookOpen },
@@ -329,8 +329,8 @@ const CareerAI = () => {
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as ResultTab)}
                                     className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold capitalize transition-all whitespace-nowrap ${activeTab === tab.id
-                                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
-                                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-slate-900 dark:text-white shadow-lg shadow-blue-500/25'
+                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-50 dark:bg-slate-800'
                                         }`}
                                 >
                                     <tab.icon size={18} />
@@ -358,7 +358,7 @@ const CareerAI = () => {
                         {loadingTab && (
                             <div className="py-20 text-center">
                                 <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                                <p className="text-slate-400">Loading personalized data...</p>
+                                <p className="text-slate-600 dark:text-slate-400">Loading personalized data...</p>
                             </div>
                         )}
 
@@ -389,8 +389,8 @@ const CareerAI = () => {
 
 const ResourcesView = ({ resources, roleName }: any) => (
     <div className="space-y-6">
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Lightbulb className="text-yellow-400" />
                 Recommended Resources for {roleName}
             </h3>
@@ -407,9 +407,9 @@ const ResourcesView = ({ resources, roleName }: any) => (
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-12 bg-slate-950 rounded-lg border border-slate-800 border-dashed">
+                <div className="text-center py-12 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 border-dashed">
                     <BookOpen className="mx-auto text-slate-600 mb-2" size={32} />
-                    <p className="text-slate-400">No specific resources found for this role yet.</p>
+                    <p className="text-slate-600 dark:text-slate-400">No specific resources found for this role yet.</p>
                 </div>
             )}
         </div>
@@ -419,14 +419,14 @@ const ResourcesView = ({ resources, roleName }: any) => (
 const ResourceCard = ({ title, type, link, desc }: any) => (
     <div
         onClick={() => link && window.open(link, '_blank')}
-        className="bg-slate-950 border border-slate-800 p-4 rounded-lg hover:border-blue-500/50 transition-colors group cursor-pointer"
+        className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-4 rounded-lg hover:border-blue-500/50 transition-colors group cursor-pointer"
     >
         <div className="flex justify-between items-start mb-2">
             <span className="px-2 py-1 rounded bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/20">{type || 'Resource'}</span>
-            {link && <ExternalLink size={16} className="text-slate-500 group-hover:text-white transition-colors" />}
+            {link && <ExternalLink size={16} className="text-slate-500 group-hover:text-slate-900 dark:text-white transition-colors" />}
         </div>
-        <h4 className="font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">{title}</h4>
-        <p className="text-sm text-slate-400 line-clamp-2">{desc}</p>
+        <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-400 transition-colors">{title}</h4>
+        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">{desc}</p>
     </div>
 );
 
@@ -434,9 +434,9 @@ const DynamicRoadmap = ({ roadmap, roleName }: any) => {
     if (!roadmap || !roadmap.phases) return null;
 
     return (
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8">
             <div className="flex justify-between items-center mb-8">
-                <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
                     <BookOpen className="text-purple-400" />
                     Personalized Learning Roadmap: {roleName}
                 </h3>
@@ -449,31 +449,31 @@ const DynamicRoadmap = ({ roadmap, roleName }: any) => {
                 {roadmap.phases.map((phase: any, idx: number) => (
                     <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                         <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 z-10 transition-all duration-300 shadow-xl shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2
-                            ${phase.status === 'completed' ? 'bg-slate-900 border-emerald-500 text-emerald-500' :
-                                phase.status === 'in-progress' ? 'bg-slate-900 border-blue-500 text-blue-400 scale-125' :
-                                    'bg-slate-900 border-slate-700 text-slate-600'}`}>
+                            ${phase.status === 'completed' ? 'bg-white dark:bg-slate-900 border-emerald-500 text-emerald-500' :
+                                phase.status === 'in-progress' ? 'bg-white dark:bg-slate-900 border-blue-500 text-blue-400 scale-125' :
+                                    'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-600'}`}>
                             {phase.status === 'completed' ? <Award size={18} /> :
                                 phase.status === 'in-progress' ? <Target size={18} /> :
                                     <span className="font-bold text-sm">{idx + 1}</span>}
                         </div>
                         <div className={`w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl border transition-all duration-300
                             ${phase.status === 'in-progress' ? 'bg-blue-900/10 border-blue-500/50 shadow-lg shadow-blue-500/10' :
-                                'bg-slate-950 border-slate-800 hover:border-slate-700'}`}>
+                                'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700'}`}>
                             <div className="flex justify-between items-start mb-2">
                                 <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded
                                     ${phase.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400' :
                                         phase.status === 'in-progress' ? 'bg-blue-500/10 text-blue-400' :
-                                            'bg-slate-800 text-slate-500'}`}>
+                                            'bg-slate-50 dark:bg-slate-800 text-slate-500'}`}>
                                     {phase.status || 'Locked'}
                                 </span>
                                 <span className="text-xs text-slate-500">{phase.duration}</span>
                             </div>
-                            <div className={`font-bold text-lg mb-2 ${phase.status === 'in-progress' ? 'text-white' : 'text-slate-300'}`}>
+                            <div className={`font-bold text-lg mb-2 ${phase.status === 'in-progress' ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>
                                 {phase.phaseName}
                             </div>
                             <div className="flex flex-wrap gap-2 mt-3">
                                 {phase.skills.map((skill: any, i: number) => (
-                                    <span key={i} className="px-2 py-1 bg-slate-900 rounded text-xs text-slate-400 border border-slate-800">
+                                    <span key={i} className="px-2 py-1 bg-white dark:bg-slate-900 rounded text-xs text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">
                                         {skill.skillName}
                                     </span>
                                 ))}
@@ -497,15 +497,15 @@ const DynamicSimulation = ({ simulation, roleName }: any) => {
     const currentData = stages[selectedStage].data;
 
     return (
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 flex items-center gap-3">
                 <TrendingUp className="text-emerald-400" />
                 Career Trajectory Simulation: {roleName}
             </h3>
 
             {/* Visual Timeline */}
             <div className="relative mb-12 px-4">
-                <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-800 -translate-y-1/2 rounded-full"></div>
+                <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-50 dark:bg-slate-800 -translate-y-1/2 rounded-full"></div>
                 <div className="flex justify-between relative z-10">
                     {stages.map((stage: any, idx: number) => (
                         <button
@@ -515,12 +515,12 @@ const DynamicSimulation = ({ simulation, roleName }: any) => {
                         >
                             <div className={`w-14 h-14 rounded-full flex items-center justify-center border-4 shadow-xl transition-all
                                 ${selectedStage === idx
-                                    ? 'bg-slate-900 border-blue-500 text-blue-400 shadow-blue-500/20'
-                                    : 'bg-slate-800 border-slate-700 text-slate-400'}`}>
+                                    ? 'bg-white dark:bg-slate-900 border-blue-500 text-blue-400 shadow-blue-500/20'
+                                    : 'bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400'}`}>
                                 <span className="font-bold text-lg">{idx + 1}</span>
                             </div>
-                            <div className={`text-sm font-bold bg-slate-950 px-3 py-1 rounded-full border border-slate-800
-                                ${selectedStage === idx ? 'text-white border-blue-500/50' : 'text-slate-500'}`}>
+                            <div className={`text-sm font-bold bg-slate-50 dark:bg-slate-950 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800
+                                ${selectedStage === idx ? 'text-slate-900 dark:text-white border-blue-500/50' : 'text-slate-500'}`}>
                                 {stage.label}
                             </div>
                         </button>
@@ -529,7 +529,7 @@ const DynamicSimulation = ({ simulation, roleName }: any) => {
             </div>
 
             {/* Detailed Stage View */}
-            <div className="bg-slate-950 border border-slate-800 rounded-xl p-6 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-6 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
                     <TrendingUp size={120} />
                 </div>
@@ -538,25 +538,25 @@ const DynamicSimulation = ({ simulation, roleName }: any) => {
                     <div className="space-y-4">
                         <div>
                             <div className="text-slate-500 text-sm uppercase tracking-wider font-bold mb-1">Estimated Role</div>
-                            <h4 className="text-3xl font-bold text-white">{currentData.jobRole}</h4>
+                            <h4 className="text-3xl font-bold text-slate-900 dark:text-white">{currentData.jobRole}</h4>
                         </div>
 
                         <div>
                             <div className="text-slate-500 text-sm uppercase tracking-wider font-bold mb-1">Salary Potential</div>
                             <div className="text-4xl font-bold text-emerald-400 flex items-center gap-2">
                                 {currentData.salaryRange ? `₹${(currentData.salaryRange.minSalary / 100000).toFixed(1)}L - ₹${(currentData.salaryRange.maxSalary / 100000).toFixed(1)}L` : 'TBD'}
-                                <span className="text-sm font-normal text-slate-500 bg-slate-900 px-2 py-1 rounded">per year</span>
+                                <span className="text-sm font-normal text-slate-500 bg-white dark:bg-slate-900 px-2 py-1 rounded">per year</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="space-y-4 border-l border-slate-800 pl-8">
+                    <div className="space-y-4 border-l border-slate-200 dark:border-slate-800 pl-8">
                         <div>
                             <div className="text-slate-500 text-sm uppercase tracking-wider font-bold mb-2">Top Skills Gained</div>
                             <div className="flex flex-wrap gap-2">
                                 {/* Slice to max 6 skills to avoid overflow */}
                                 {currentData.skillsGained && currentData.skillsGained.slice(0, 6).map((skill: string, i: number) => (
-                                    <span key={i} className="px-2 py-1 bg-slate-800 text-slate-300 rounded text-xs border border-slate-700">
+                                    <span key={i} className="px-2 py-1 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded text-xs border border-slate-300 dark:border-slate-700">
                                         {skill}
                                     </span>
                                 ))}
@@ -579,30 +579,30 @@ const DynamicSimulation = ({ simulation, roleName }: any) => {
 const HistoryView = ({ history, onSelect }: any) => {
     if (!history || history.length === 0) {
         return (
-            <div className="text-center py-12 bg-slate-950 rounded-lg border border-slate-800 border-dashed">
+            <div className="text-center py-12 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 border-dashed">
                 <Award className="mx-auto text-slate-600 mb-2" size={32} />
-                <p className="text-slate-400">No assessment history found.</p>
+                <p className="text-slate-600 dark:text-slate-400">No assessment history found.</p>
             </div>
         );
     }
 
     return (
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Award className="text-purple-400" />
                 Assessment History
             </h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {history.map((item: any, idx: number) => (
-                    <div key={idx} className="bg-slate-950 p-4 rounded-lg border border-slate-800 hover:border-blue-500/50 transition-colors">
+                    <div key={idx} className="bg-slate-50 dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 transition-colors">
                         <div className="flex justify-between items-start mb-2">
-                            <div className="font-bold text-white text-lg">{item.domain || "Assessment"}</div>
-                            <span className="text-xs text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                            <div className="font-bold text-slate-900 dark:text-white text-lg">{item.domain || "Assessment"}</div>
+                            <span className="text-xs text-slate-500 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800">
                                 {new Date(item.completedAt).toLocaleDateString()}
                             </span>
                         </div>
                         <div className="flex justify-between items-center mt-4">
-                            <div className="text-sm text-slate-400">
+                            <div className="text-sm text-slate-600 dark:text-slate-400">
                                 {item.totalQuestions} Questions
                             </div>
                             <button

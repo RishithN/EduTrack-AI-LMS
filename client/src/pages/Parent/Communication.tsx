@@ -19,12 +19,12 @@ const ParentCommunication = () => {
     useEffect(() => {
         // Load initial data
         setMessages(communicationStore.getChat());
-        setSentRequests(communicationStore.getMeetings());
+        setSentRequests(communicationStore.getMeetings().filter(m => m.parentName === 'Mr. Verma'));
 
         // Simple polling to keep data in sync
         const interval = setInterval(() => {
             setMessages(communicationStore.getChat());
-            setSentRequests(communicationStore.getMeetings());
+            setSentRequests(communicationStore.getMeetings().filter(m => m.parentName === 'Mr. Verma'));
         }, 2000);
 
         return () => clearInterval(interval);
@@ -50,7 +50,7 @@ const ParentCommunication = () => {
         });
 
         // Update local list immediately
-        setSentRequests(communicationStore.getMeetings());
+        setSentRequests(communicationStore.getMeetings().filter(m => m.parentName === 'Mr. Verma'));
 
         // Reset form
         setMeetingForm({ ...meetingForm, date: '', time: '' });
@@ -59,26 +59,26 @@ const ParentCommunication = () => {
 
     return (
         <DashboardLayout role="parent">
-            <div className="h-[calc(100vh-100px)] flex flex-col gap-6">
-                <div>
-                    <h1 className="text-3xl font-bold text-white">Communication</h1>
-                    <p className="text-slate-400">Chat with teachers or schedule meetings.</p>
+            <div className="h-full flex flex-col gap-6">
+                <div className="shrink-0">
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Communication</h1>
+                    <p className="text-slate-600 dark:text-slate-400">Chat with teachers or schedule meetings.</p>
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-6 flex-1 min-h-0">
                     {/* Chat Section */}
-                    <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden">
-                        <div className="p-4 border-b border-slate-800 bg-slate-950 flex items-center justify-between">
+                    <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col min-h-[400px]">
+                        <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">
+                                <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-slate-900 dark:text-white font-bold">
                                     KP
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-white">Prof. K. Priya</h3>
-                                    <p className="text-xs text-slate-400">Class Mentor</p>
+                                    <h3 className="font-bold text-slate-900 dark:text-white">Prof. K. Priya</h3>
+                                    <p className="text-xs text-slate-600 dark:text-slate-400">Class Mentor</p>
                                 </div>
                             </div>
-                            <button className="text-slate-400 hover:text-white">
+                            <button className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white">
                                 <Video size={20} />
                             </button>
                         </div>
@@ -87,8 +87,8 @@ const ParentCommunication = () => {
                             {messages.map((msg) => (
                                 <div key={msg.id} className={`flex ${msg.sender === 'parent' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[70%] p-3 rounded-2xl ${msg.sender === 'parent'
-                                        ? 'bg-purple-600 text-white rounded-tr-none'
-                                        : 'bg-slate-800 text-slate-200 rounded-tl-none'
+                                        ? 'bg-purple-600 text-slate-900 dark:text-white rounded-tr-none'
+                                        : 'bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none'
                                         }`}>
                                         <p className="text-sm">{msg.text}</p>
                                         <span className="text-[10px] opacity-70 mt-1 block">{msg.timestamp}</span>
@@ -97,18 +97,18 @@ const ParentCommunication = () => {
                             ))}
                         </div>
 
-                        <div className="p-4 bg-slate-950 border-t border-slate-800 flex gap-2">
+                        <div className="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex gap-2">
                             <input
                                 type="text"
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                                 placeholder="Type a message..."
-                                className="flex-1 bg-slate-900 border border-slate-800 rounded-full px-4 text-white focus:outline-none focus:border-purple-500 block"
+                                className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 text-slate-900 dark:text-white focus:outline-none focus:border-purple-500 block"
                                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                             />
                             <button
                                 onClick={handleSend}
-                                className="p-3 bg-purple-600 hover:bg-purple-500 text-white rounded-full transition-colors"
+                                className="p-3 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white rounded-full transition-colors"
                             >
                                 <Send size={18} />
                             </button>
@@ -118,8 +118,8 @@ const ParentCommunication = () => {
                     {/* Schedule Meeting & Sent Requests */}
                     <div className="flex flex-col gap-6 h-full overflow-hidden">
                         {/* Form */}
-                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 h-fit shrink-0">
-                            <h3 className="font-bold text-white mb-6 flex items-center gap-2">
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 h-fit shrink-0">
+                            <h3 className="font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
                                 <Calendar className="text-purple-400" /> Request Meeting
                             </h3>
                             <div className="space-y-4">
@@ -128,7 +128,7 @@ const ParentCommunication = () => {
                                     <select
                                         value={meetingForm.reason}
                                         onChange={(e) => setMeetingForm({ ...meetingForm, reason: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-300 text-sm focus:border-purple-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-slate-700 dark:text-slate-300 text-sm focus:border-purple-500 outline-none"
                                     >
                                         <option>Academic Performance</option>
                                         <option>Attendance Issue</option>
@@ -140,9 +140,10 @@ const ParentCommunication = () => {
                                     <label className="text-xs text-slate-500 font-bold uppercase mb-1 block">Preferred Date</label>
                                     <input
                                         type="date"
+                                        min={new Date().toISOString().split('T')[0]}
                                         value={meetingForm.date}
                                         onChange={(e) => setMeetingForm({ ...meetingForm, date: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-300 text-sm focus:border-purple-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-slate-700 dark:text-slate-300 text-sm focus:border-purple-500 outline-none"
                                         style={{ colorScheme: 'dark' }}
                                     />
                                 </div>
@@ -152,13 +153,13 @@ const ParentCommunication = () => {
                                         type="time"
                                         value={meetingForm.time}
                                         onChange={(e) => setMeetingForm({ ...meetingForm, time: e.target.value })}
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-300 text-sm focus:border-purple-500 outline-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-slate-700 dark:text-slate-300 text-sm focus:border-purple-500 outline-none"
                                         style={{ colorScheme: 'dark' }}
                                     />
                                 </div>
                                 <button
                                     onClick={handleScheduleMeeting}
-                                    className="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg mt-2 hover:opacity-90 transition-opacity"
+                                    className="w-full py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-slate-900 dark:text-white font-bold rounded-lg mt-2 hover:opacity-90 transition-opacity"
                                 >
                                     Send Request
                                 </button>
@@ -166,14 +167,14 @@ const ParentCommunication = () => {
                         </div>
 
                         {/* Recent Requests List */}
-                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex-1 overflow-y-auto min-h-[200px]">
-                            <h4 className="text-sm font-bold text-white mb-3">Sent Requests</h4>
-                            <div className="space-y-3">
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 flex flex-col flex-1 overflow-hidden">
+                            <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3 shrink-0">Sent Requests</h4>
+                            <div className="space-y-3 overflow-y-auto flex-1 pr-2">
                                 {sentRequests.length === 0 ? (
                                     <p className="text-xs text-slate-500 text-center py-4">No requests sent yet.</p>
                                 ) : (
                                     sentRequests.map((req) => (
-                                        <div key={req.id} className="bg-slate-950/50 rounded-lg p-3 border border-slate-800">
+                                        <div key={req.id} className="bg-slate-950/50 rounded-lg p-3 border border-slate-200 dark:border-slate-800">
                                             <div className="flex items-center justify-between mb-2">
                                                 <div className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${req.status === 'pending' ? 'bg-yellow-500/10 text-yellow-500' :
                                                     req.status === 'approved' ? 'bg-emerald-500/10 text-emerald-500' :
@@ -185,9 +186,9 @@ const ParentCommunication = () => {
                                                     <Clock size={10} /> {new Date(req.requestDate).toLocaleDateString()}
                                                 </div>
                                             </div>
-                                            <div className="text-sm font-bold text-white mb-1">{req.reason}</div>
-                                            <div className="text-xs text-slate-400 flex items-center gap-2">
-                                                <span>{req.date}</span> • <span>{req.time}</span>
+                                            <div className="text-sm font-bold text-slate-900 dark:text-white mb-1">{req.reason}</div>
+                                            <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2 mt-1">
+                                                <span>{req.date}</span> • <span>{req.time}</span> • <span>Room 302, Main Block</span>
                                             </div>
                                         </div>
                                     ))

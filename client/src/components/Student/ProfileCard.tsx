@@ -17,7 +17,7 @@ const ProfileCard = ({ name, studentId, department, semester, section }: Profile
             </div>
 
             <div className="flex items-start gap-5 relative z-10">
-                <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-blue-500/20">
+                <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-500/20">
                     {name.charAt(0)}
                 </div>
 

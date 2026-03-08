@@ -64,7 +64,7 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
         return (
             <div className="text-center py-20">
                 <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto"></div>
-                <p className="text-slate-400 mt-4">Loading assessment...</p>
+                <p className="text-slate-600 dark:text-slate-400 mt-4">Loading assessment...</p>
             </div>
         );
     }
@@ -72,7 +72,7 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
     if (questions.length === 0) {
         return (
             <div className="text-center py-20">
-                <p className="text-slate-400">No questions available for this domain.</p>
+                <p className="text-slate-600 dark:text-slate-400">No questions available for this domain.</p>
             </div>
         );
     }
@@ -83,7 +83,7 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
     return (
         <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-500">
             {/* Progress Header */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
+            <div className="bg-slate-100/70 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                     <div>
                         <span className="text-sm font-mono text-blue-400 mb-1 block">
@@ -107,7 +107,7 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
                         className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
                         style={{ width: `${progress}%` }}
@@ -116,8 +116,8 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
             </div>
 
             {/* Question Card */}
-            <div className="bg-gradient-to-br from-slate-900 to-slate-900/50 border border-slate-800 rounded-2xl p-8 shadow-2xl">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-relaxed">
+            <div className="bg-gradient-to-br from-slate-900 to-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-2xl">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8 leading-relaxed">
                     {currentQuestion.questionText}
                 </h2>
 
@@ -126,13 +126,13 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
                         <button
                             key={idx}
                             onClick={() => handleOptionSelect(option, idx)}
-                            className="w-full p-5 text-left rounded-xl bg-slate-950/50 border-2 border-slate-800 hover:border-blue-500 hover:bg-blue-600/10 transition-all group flex items-center justify-between transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/10"
+                            className="w-full p-5 text-left rounded-xl bg-slate-950/50 border-2 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:bg-blue-600/10 transition-all group flex items-center justify-between transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/10"
                         >
                             <div className="flex items-center gap-4 flex-1">
-                                <div className="w-10 h-10 rounded-full bg-slate-900 border-2 border-slate-700 group-hover:border-blue-500 group-hover:bg-blue-600/20 flex items-center justify-center font-bold text-slate-400 group-hover:text-blue-400 transition-all shrink-0">
+                                <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 group-hover:border-blue-500 group-hover:bg-blue-600/20 flex items-center justify-center font-bold text-slate-600 dark:text-slate-400 group-hover:text-blue-400 transition-all shrink-0">
                                     {String.fromCharCode(65 + idx)}
                                 </div>
-                                <span className="text-slate-300 group-hover:text-white font-medium transition-colors">
+                                <span className="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:text-white font-medium transition-colors">
                                     {option}
                                 </span>
                             </div>
@@ -141,7 +141,7 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
                     ))}
                 </div>
 
-                <div className="mt-8 flex justify-between items-center pt-6 border-t border-slate-800">
+                <div className="mt-8 flex justify-between items-center pt-6 border-t border-slate-200 dark:border-slate-800">
                     <button
                         onClick={() => {
                             if (currentQ > 0) {
@@ -152,7 +152,7 @@ const DynamicAssessment = ({ domain, onComplete }: DynamicAssessmentProps) => {
                         disabled={currentQ === 0}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${currentQ === 0
                             ? 'text-slate-600 cursor-not-allowed'
-                            : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                            : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-slate-50 dark:bg-slate-800'
                             }`}
                     >
                         <ArrowRight className="rotate-180" size={18} /> Previous

@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
 import Quiz from '../models/Quiz';
-import fs from 'fs';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 const pdf = require('pdf-parse');
 
-// --- Expert Logic: Text Processing & Question Generation ---
-
-// 1. Extract Text from File
+// --- Helper: Extract Text from File ---
 const extractTextFromFile = async (fileBuffer: Buffer, mimeType: string): Promise<string> => {
     try {
         if (mimeType === 'application/pdf') {
@@ -14,9 +12,7 @@ const extractTextFromFile = async (fileBuffer: Buffer, mimeType: string): Promis
         } else if (mimeType.startsWith('text/')) {
             return cleanText(fileBuffer.toString('utf-8'));
         }
-
-        // Strict Block for Binary/Unsupported
-        return ""; // Return empty to trigger 422 error later
+        return "";
     } catch (error) {
         console.error("File extraction error:", error);
         return "";
@@ -24,144 +20,13 @@ const extractTextFromFile = async (fileBuffer: Buffer, mimeType: string): Promis
 };
 
 const cleanText = (text: string): string => {
-    // 1. Remove non-printable chars (except newlines/tabs)
     let cleaned = text.replace(/[^\x20-\x7E\n\t]/g, ' ');
-    // 2. Collapse whitespace
     cleaned = cleaned.replace(/\s+/g, ' ').trim();
     return cleaned;
 };
 
-// 2. Analyze Text for Key Concepts and Sentences
-interface TextAnalysis {
-    sentences: string[];
-    concepts: string[];
-    topics: string[];
-}
 
-const analyzeText = (text: string): TextAnalysis => {
-    // Split into sentences (rudimentary splitting)
-    const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
-
-    // Filter sentences: Must be of reasonable length (e.g., 50-300 chars) and contain content
-    // Also filter out obvious garbage (too many symbols, no spaces)
-    const validSentences = sentences
-        .map(s => s.trim())
-        .filter(s => {
-            if (s.length < 40 || s.length > 350) return false;
-            if (s.includes("Copyright") || s.includes("Page")) return false;
-            // Garbage check: if sentence has NO spaces in first 20 chars, likely binary string
-            if (!s.slice(0, 20).includes(' ')) return false;
-            return true;
-        });
-
-    // Extract potential concepts (Heuristic: Capitalized phrases in middle of sentences)
-    const conceptMap = new Map<string, number>();
-    // Refined Regex: strictly letters/spaces, min length 4. Avoids "IDAT", "IHDR" if they appear alone? 
-    // Actually, "IDAT" matches [A-Z]. We need to ignore ALL CAPS words less than 5 chars unless known?
-    // Let's just ban known binary headers explicitly.
-    const ignoredConcepts = ["IDAT", "IHDR", "HREF", "HTTP", "HTTPS", "NULL", "TRUE", "FALSE", "UNDEFINED", "CNTR", "YSUK", "PK", "JFIF"];
-
-    const conceptRegex = /\b[A-Z][a-zA-Z\s-]{3,}\b/g;
-
-    validSentences.forEach(s => {
-        const matches = s.match(conceptRegex);
-        if (matches) {
-            matches.forEach(m => {
-                const clean = m.trim();
-                // Filter out all-caps junk often found in binary dumps (usually < 5 chars or random)
-                // Also filter common stop words
-                if (clean.length > 3 &&
-                    !["The", "A", "An", "In", "On", "For", "To", "And", "With", "From", "That", "This"].includes(clean) &&
-                    !ignoredConcepts.includes(clean)
-                ) {
-                    conceptMap.set(clean, (conceptMap.get(clean) || 0) + 1);
-                }
-            });
-        }
-    });
-
-    // Sort concepts by frequency
-    const concepts = Array.from(conceptMap.entries())
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 20) // Top 20 concepts
-        .map(e => e[0]);
-
-    // topics could be section headers (simplified here to just top concepts)
-    const topics = concepts.slice(0, 5);
-
-    return { sentences: validSentences, concepts, topics };
-};
-
-// 3. Question Generators
-interface Question {
-    q: string;
-    options: string[];
-    ans: number;
-    explanation: string;
-    bloomsLevel: string;
-    type: string;
-}
-
-const generateMCQ = (sentence: string, concepts: string[]): Question | null => {
-    // Find a concept in this sentence
-    const targetConcept = concepts.find(c => sentence.includes(c));
-    if (!targetConcept) return null;
-
-    // Mask the concept
-    const questionText = sentence.replace(targetConcept, "_______");
-
-    // Generate distractors
-    const distractors = concepts
-        .filter(c => c !== targetConcept)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3);
-
-    if (distractors.length < 3) return null;
-
-    const options = [targetConcept, ...distractors].sort(() => 0.5 - Math.random());
-    const ansIndex = options.indexOf(targetConcept);
-
-    return {
-        q: `Based on the text: "${questionText}"`,
-        options: options,
-        ans: ansIndex,
-        explanation: `The document states: "${sentence}"`,
-        bloomsLevel: "Remember",
-        type: "mcq"
-    };
-};
-
-const generateTrueFalse = (sentence: string): Question => {
-    // 50% chance to generate False (by simple negation or swaps - hard to do robustly without LLM)
-    // For "Strict Academic" accuracy without LLM, we stick to TRUE statements context testing
-    // To make it harder, we could pick a random concept and say it does XYZ when it doesn't, but that's risky.
-    // Safe Approach: "True" check.
-
-    return {
-        q: `The document explicitly states that: "${sentence}"`,
-        options: ["True", "False"],
-        ans: 0, // True
-        explanation: `Direct quote from text: "${sentence}"`,
-        bloomsLevel: "Understand",
-        type: "true_false"
-    };
-};
-
-const generateDescriptive = (sentence: string, concepts: string[]): Question | null => {
-    const targetConcept = concepts.find(c => sentence.includes(c));
-    if (!targetConcept) return null;
-
-    return {
-        q: `Explain the significance of "${targetConcept}" as described in the provided document.`,
-        options: [],
-        ans: 0,
-        explanation: `Refrence text: "${sentence}"... Key points should include its context and relation to ${concepts[0] || 'the main topic'}.`,
-        bloomsLevel: "Analyze",
-        type: "descriptive"
-    };
-};
-
-// 4. Main Generator Engine
+// --- Main Generator Engine using Gemini AI ---
 export const generateQuiz = async (req: Request, res: Response) => {
     try {
         const { topic, difficulty, count, questionTypes } = req.body;
@@ -171,76 +36,109 @@ export const generateQuiz = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "No file uploaded. Please upload a document to generate a content-grounded quiz." });
         }
 
+        const apiKey = process.env.GEMINI_API_KEY || '';
+        if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+            return res.status(503).json({
+                message: "AI Generation is offline. Please configure a valid GEMINI_API_KEY in the server/.env file."
+            });
+        }
+
         // A. Extract Text
         const rawText = await extractTextFromFile(file.buffer, file.mimetype);
 
-        // If empty (unsupported or read failure), return specific error
         if (!rawText || rawText.length < 50) {
             return res.status(422).json({
                 message: "Unable to analyze document. Please ensure you upload a valid PDF or Text file containing readable text."
             });
         }
 
-        // B. Analyze
-        const { sentences, concepts, topics } = analyzeText(rawText);
-
-        if (sentences.length < count) {
-            // Not enough content
-            return res.status(422).json({ message: `Insufficient source content.Found only ${sentences.length} valid sentences for ${count} questions.` });
-        }
-
-        // C. Generate
-        const questions: any[] = [];
-        const requiredCount = parseInt(count) || 5;
-        const reqTypes = questionTypes || ['mcq'];
-
-        let attempts = 0;
-        // Try to generate until we have enough unique questions
-        while (questions.length < requiredCount && attempts < sentences.length * 2) {
-            attempts++;
-            const randomSentence = sentences[Math.floor(Math.random() * sentences.length)];
-            const type = reqTypes[Math.floor(Math.random() * reqTypes.length)];
-
-            // Deduplication check: Don't use same sentence twice
-            if (questions.some(q => q.explanation.includes(randomSentence))) continue;
-
-            let q: Question | null = null;
-            if (type === 'mcq') {
-                q = generateMCQ(randomSentence, concepts);
-            } else if (type === 'true_false') {
-                q = generateTrueFalse(randomSentence);
-            } else {
-                q = generateDescriptive(randomSentence, concepts);
-            }
-
-            if (q) {
-                // Apply User Constraints
-                if (difficulty === 'hard') q.bloomsLevel = "Analyze"; // Force label for now
-
-                questions.push({
-                    id: questions.length + 1,
-                    ...q,
-                    difficulty: difficulty || 'medium'
-                });
-            }
-        }
-
-        // Cleanup: Delete uploaded file to save space (optional, but good practice)
-        // fs.unlinkSync(file.path); 
-
-        res.json({
-            title: `Quiz: ${topic || topics[0] || "Document Analysis"} `,
-            difficulty: difficulty,
-            questions,
-            meta: {
-                bloomStats: { remember: "30%", understand: "40%", apply: "20%", analyze: "10%" },
-                topicsCovered: topics
+        // B. Generate via Gemini
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({
+            model: 'gemini-2.5-flash',
+            generationConfig: {
+                temperature: 0.2, // Low temperature for factual accuracy based on doc
+                responseMimeType: "application/json" // Force JSON output
             }
         });
 
-    } catch (error) {
-        console.error('Error generating quiz:', error);
-        res.status(500).json({ message: 'Server error during generation', error: error });
+        // Ensure we handle the questionTypes array correctly (multipart/form-data sends strings sometimes)
+        let parsedTypes = ['mcq'];
+        try {
+            parsedTypes = typeof questionTypes === 'string' ? JSON.parse(questionTypes) : questionTypes;
+        } catch (e) { }
+
+        const prompt = `
+            You are an expert academic examiner. I will provide you with a source document text.
+            Your task is to generate EXACTLY ${count || 5} unique assessment questions based ONLY on the provided text.
+            
+            Parameters:
+            - Difficulty Level: ${difficulty || 'medium'}
+            - Topic Context (if any): ${topic || 'General'}
+            - Allowed Question Types: ${parsedTypes.join(', ')} (You must mix these types if multiple are provided).
+            
+            Valid Question Types:
+            - 'mcq' : Provide 4 'options', with 'ans' being the index (0-3) of the correct option.
+            - 'true_false' : Provide 2 'options' ["True", "False"], with 'ans' being the index (0 or 1).
+            - 'descriptive' : Provide an empty array for 'options' [], 'ans' is 0.
+
+            You MUST return a valid JSON object matching exactly this structure:
+            {
+                "title": "A short generated title for the quiz based on the text",
+                "questions": [
+                    {
+                        "id": 1,
+                        "q": "The actual question text",
+                        "options": ["Option A", "Option B"], 
+                        "ans": 0,
+                        "explanation": "A detailed explanation of why this is correct based on the text.",
+                        "bloomsLevel": "Remember|Understand|Apply|Analyze|Evaluate|Create",
+                        "type": "mcq|true_false|descriptive"
+                    }
+                ]
+            }
+
+            Do NOT wrap the JSON in markdown code blocks. Just return the JSON object directly.
+            
+            SOURCE TEXT TO ANALYZE:
+            '''
+            ${rawText.substring(0, 30000)} /* Limiting to avoid massive token costs/limits */
+            '''
+        `;
+
+        const result = await model.generateContent(prompt);
+        const responseText = result.response.text();
+        // Strip any markdown code blocks returned by Gemini
+        const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+
+        let quizData;
+        try {
+            quizData = JSON.parse(cleanedText);
+
+            // Re-apply difficulty tagging
+            quizData.questions = quizData.questions.map((q: any) => ({
+                ...q,
+                difficulty: difficulty || 'medium'
+            }));
+
+        } catch (parseError) {
+            console.error("Failed to parse Gemini JSON:", responseText);
+            return res.status(500).json({ message: "The AI generated an invalid format. Please try again." });
+        }
+
+        res.json({
+            title: quizData.title || `Quiz: ${topic || "Document Analysis"}`,
+            difficulty: difficulty,
+            questions: quizData.questions,
+            meta: {
+                bloomStats: { remember: "Mixed", understand: "Mixed", apply: "Mixed", analyze: "Mixed" },
+                topicsCovered: [topic || "Extracted Concepts"]
+            }
+        });
+
+    } catch (error: any) {
+        console.error('Error generating quiz:', error.message || error);
+        res.status(500).json({ message: 'Server error during AI generation', error: error.message || error });
     }
 };
 
@@ -248,20 +146,25 @@ export const saveQuiz = async (req: Request, res: Response) => {
     try {
         const { title, subjectCode, questions, difficulty } = req.body;
 
+        // The Quiz model enum expects capitalized values ('Easy', 'Medium', 'Hard')
+        // but the frontend sends lowercase ('easy', 'medium', 'hard')
+        const normalizedDifficulty = difficulty
+            ? difficulty.charAt(0).toUpperCase() + difficulty.slice(1).toLowerCase()
+            : 'Medium';
+
         const newQuiz = new Quiz({
             title,
             subjectCode,
             questions,
-            difficulty,
+            difficulty: normalizedDifficulty,
             createdBy: (req as any).user._id,
-            createdAt: new Date()
         });
 
         await newQuiz.save();
         res.status(201).json(newQuiz);
     } catch (error) {
         console.error('Error saving quiz:', error);
-        res.status(500).json({ message: 'Failed to save quiz' });
+        res.status(500).json({ message: 'Failed to save quiz', detail: String(error) });
     }
 };
 
@@ -282,5 +185,46 @@ export const getStudentQuizzes = async (req: Request, res: Response) => {
     } catch (error) {
         console.error('Fetch error:', error);
         res.status(500).json({ message: 'Failed to fetch quizzes' });
+    }
+};
+
+import QuizResult from '../models/QuizResult';
+
+export const saveQuizResult = async (req: Request, res: Response) => {
+    try {
+        const { quizId, score, total } = req.body;
+        const studentId = (req as any).user._id;
+
+        const newResult = new QuizResult({
+            quizId,
+            studentId,
+            score,
+            total
+        });
+
+        await newResult.save();
+        res.status(201).json(newResult);
+    } catch (error) {
+        console.error('Error saving quiz result:', error);
+        res.status(500).json({ message: 'Failed to save result' });
+    }
+};
+
+export const getQuizResults = async (req: Request, res: Response) => {
+    try {
+        // Find quizzes created by this teacher
+        const teacherQuizzes = await Quiz.find({ createdBy: (req as any).user._id }).select('_id title subjectCode');
+        const quizIds = teacherQuizzes.map(q => q._id);
+
+        // Find all results for these quizzes
+        const results = await QuizResult.find({ quizId: { $in: quizIds } })
+            .populate('studentId', 'name prn email')
+            .populate('quizId', 'title subjectCode')
+            .sort({ completedAt: -1 });
+
+        res.json(results);
+    } catch (error) {
+        console.error('Fetch error:', error);
+        res.status(500).json({ message: 'Failed to fetch results' });
     }
 };

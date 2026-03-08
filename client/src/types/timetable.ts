@@ -12,7 +12,6 @@ export interface TimetableEntry {
     startTime: string;   // e.g., "09:00"
     endTime: string;     // e.g., "10:00"
     type: 'theory' | 'lab' | 'break';
-    isLaptopRequired?: boolean;
     attendanceStatus?: AttendanceStatus; // Optional, dynamically merged
 }
 

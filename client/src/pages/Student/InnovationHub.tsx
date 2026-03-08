@@ -280,23 +280,23 @@ const InnovationHub = () => {
                             <Rocket className="text-orange-500" size={40} />
                             Innovation Hub
                         </h1>
-                        <p className="text-slate-400 mt-2 text-lg">Where brilliant ideas take flight. Pitch, vote, and collaborate.</p>
+                        <p className="text-slate-600 dark:text-slate-400 mt-2 text-lg">Where brilliant ideas take flight. Pitch, vote, and collaborate.</p>
                     </div>
                     <div className="flex items-center gap-4">
-                        <div className="flex bg-slate-900/50 backdrop-blur-md rounded-full p-1 border border-slate-700/50">
+                        <div className="flex bg-slate-100/70 dark:bg-slate-900/50 backdrop-blur-md rounded-full p-1 border border-slate-300 dark:border-slate-700/50">
                             <button
                                 onClick={() => setViewMode('my-ideas')}
                                 className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${viewMode === 'my-ideas'
-                                    ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-lg shadow-orange-500/25'
-                                    : 'text-slate-400 hover:text-white'}`}
+                                    ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-slate-900 dark:text-white shadow-lg shadow-orange-500/25'
+                                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
                             >
                                 My Ideas
                             </button>
                             <button
                                 onClick={() => setViewMode('community')}
                                 className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${viewMode === 'community'
-                                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
-                                    : 'text-slate-400 hover:text-white'}`}
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-slate-900 dark:text-white shadow-lg shadow-blue-500/25'
+                                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
                             >
                                 Community Feed
                             </button>
@@ -361,8 +361,8 @@ const InnovationHub = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end gap-3 pt-2">
-                                <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Cancel</button>
-                                <button type="button" onClick={handleSubmit} className="px-6 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-500">Post Idea</button>
+                                <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:text-white">Cancel</button>
+                                <button type="button" onClick={handleSubmit} className="px-6 py-2 bg-orange-600 text-slate-900 dark:text-white rounded-lg font-medium hover:bg-orange-500">Post Idea</button>
                             </div>
                         </form>
                     </div>
@@ -410,7 +410,7 @@ const InnovationHub = () => {
                                                 onClick={(e) => handleUpvote(e, idea._id)}
                                                 className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${userVotes[idea._id] === 'up'
                                                     ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                                    : 'bg-slate-800/50 text-slate-400 hover:bg-green-500/10 hover:text-green-400 border border-slate-700'
+                                                    : 'bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:bg-green-500/10 hover:text-green-400 border border-slate-300 dark:border-slate-700'
                                                     }`}
                                                 disabled={!!userVotes[idea._id]}
                                             >
@@ -421,13 +421,13 @@ const InnovationHub = () => {
                                                 onClick={(e) => handleDownvote(e, idea._id)}
                                                 className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${userVotes[idea._id] === 'down'
                                                     ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                                                    : 'bg-slate-800/50 text-slate-400 hover:bg-red-500/10 hover:text-red-400 border border-slate-700'
+                                                    : 'bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:bg-red-500/10 hover:text-red-400 border border-slate-300 dark:border-slate-700'
                                                     }`}
                                                 disabled={!!userVotes[idea._id]}
                                             >
                                                 <ThumbsDown size={18} />
                                             </button>
-                                            <button className="flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors">
+                                            <button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-blue-400 transition-colors">
                                                 <MessageSquare size={18} />
                                                 <span>{idea.comments?.length || 0}</span>
                                             </button>
@@ -453,7 +453,7 @@ const InnovationHub = () => {
                                     </div>
                                     <h2 className="text-3xl font-bold text-slate-900 dark:text-white mt-3 mb-2">{selectedIdea.title}</h2>
                                 </div>
-                                <button onClick={() => setSelectedIdea(null)} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                                <button onClick={() => setSelectedIdea(null)} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-900 dark:text-white">
                                     <X size={24} />
                                 </button>
                             </div>
@@ -502,7 +502,7 @@ const InnovationHub = () => {
                                         />
                                         <button
                                             onClick={handleComment}
-                                            className="bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors"
+                                            className="bg-orange-600 hover:bg-orange-500 text-slate-900 dark:text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors"
                                         >
                                             Post
                                         </button>

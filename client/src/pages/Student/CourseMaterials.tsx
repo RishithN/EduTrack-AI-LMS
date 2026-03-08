@@ -25,10 +25,36 @@ const SUBJECTS = [
             { title: 'Exception Handling', type: 'video', duration: '35 mins' }
         ]
     },
-    { id: 'cs203', name: 'DBMS', code: 'CS203', modules: [] },
-    { id: 'cs204', name: 'Computer Networks', code: 'CS204', modules: [] },
-    { id: 'cs205', name: 'Web Development', code: 'CS205', modules: [] },
-    { id: 'cs206', name: 'Cybersecurity', code: 'CS206', modules: [] },
+    {
+        id: 'cs203', name: 'DBMS', code: 'CS203', modules: [
+            { title: 'Introduction to Databases', type: 'video', duration: '55 mins' },
+            { title: 'Entity-Relationship Model', type: 'doc', pages: 15 },
+            { title: 'Relational Algebra & SQL', type: 'video', duration: '60 mins' },
+            { title: 'Normalization', type: 'doc', pages: 20 }
+        ]
+    },
+    {
+        id: 'cs204', name: 'Computer Networks', code: 'CS204', modules: [
+            { title: 'OSI Model Deep Dive', type: 'video', duration: '45 mins' },
+            { title: 'TCP/IP Protocol Suite', type: 'doc', pages: 25 },
+            { title: 'Routing Algorithms', type: 'video', duration: '50 mins' }
+        ]
+    },
+    {
+        id: 'cs205', name: 'Web Development', code: 'CS205', modules: [
+            { title: 'HTML5 & CSS3 Basics', type: 'video', duration: '40 mins' },
+            { title: 'JavaScript Fundamentals', type: 'video', duration: '60 mins' },
+            { title: 'React JS Introduction', type: 'doc', pages: 30 },
+            { title: 'Building a Full Stack App', type: 'video', duration: '90 mins' }
+        ]
+    },
+    {
+        id: 'cs206', name: 'Cybersecurity', code: 'CS206', modules: [
+            { title: 'Introduction to Cryptography', type: 'video', duration: '50 mins' },
+            { title: 'Network Security Principles', type: 'doc', pages: 18 },
+            { title: 'Ethical Hacking Basics', type: 'video', duration: '75 mins' }
+        ]
+    },
 ];
 
 const CourseMaterials = () => {
@@ -166,14 +192,14 @@ const CourseMaterials = () => {
                 {/* Main Content Area */}
                 <div className={`flex-1 flex flex-col transition-all duration-300 ${isAiOpen ? 'w-2/3' : 'w-full'}`}>
                     <div className="mb-6">
-                        <h1 className="text-3xl font-bold text-white mb-2">Course Materials</h1>
-                        <p className="text-slate-400">Access your study resources and get AI assistance.</p>
+                        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Course Materials</h1>
+                        <p className="text-slate-600 dark:text-slate-400">Access your study resources and get AI assistance.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 min-h-0">
                         {/* Subjects List */}
-                        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col">
-                            <div className="p-4 bg-slate-950 border-b border-slate-800 font-bold text-white">
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden flex flex-col">
+                            <div className="p-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 font-bold text-slate-900 dark:text-white">
                                 Subjects
                             </div>
                             <div className="overflow-y-auto flex-1 p-2 space-y-1">
@@ -183,7 +209,7 @@ const CourseMaterials = () => {
                                         onClick={() => setSelectedSubject(sub)}
                                         className={`w-full text-left p-3 rounded-xl flex items-center justify-between transition-colors ${selectedSubject.id === sub.id
                                             ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30'
-                                            : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:bg-slate-800 hover:text-slate-900 dark:text-white'
                                             }`}
                                     >
                                         <span className="font-medium">{sub.name}</span>
@@ -194,15 +220,15 @@ const CourseMaterials = () => {
                         </div>
 
                         {/* Modules List */}
-                        <div className="md:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col">
-                            <div className="p-4 bg-slate-950 border-b border-slate-800 flex justify-between items-center">
+                        <div className="md:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden flex flex-col">
+                            <div className="p-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
                                 <div>
-                                    <h2 className="font-bold text-white">{selectedSubject.name}</h2>
+                                    <h2 className="font-bold text-slate-900 dark:text-white">{selectedSubject.name}</h2>
                                     <span className="text-xs text-slate-500 font-mono">{selectedSubject.code}</span>
                                 </div>
                                 <button
                                     onClick={() => setIsAiOpen(!isAiOpen)}
-                                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${isAiOpen ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/25' : 'bg-slate-800 text-slate-300 hover:text-white'
+                                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${isAiOpen ? 'bg-purple-600 text-slate-900 dark:text-white shadow-lg shadow-purple-500/25' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white'
                                         }`}
                                 >
                                     <Sparkles size={16} />
@@ -215,14 +241,14 @@ const CourseMaterials = () => {
                                     <div
                                         key={idx}
                                         onClick={() => handleOpenMaterial(mod.title, mod.type)}
-                                        className="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center gap-4 hover:border-blue-500/50 hover:bg-slate-900 transition-all group cursor-pointer"
+                                        className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-4 rounded-xl flex items-center gap-4 hover:border-blue-500/50 hover:bg-white dark:bg-slate-900 transition-all group cursor-pointer"
                                     >
                                         <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${mod.type === 'video' ? 'bg-red-500/10 text-red-400' : 'bg-blue-500/10 text-blue-400'
                                             }`}>
                                             {mod.type === 'video' ? <PlayCircle size={24} /> : <FileText size={24} />}
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="font-bold text-slate-200 group-hover:text-white transition-colors">{mod.title}</h3>
+                                            <h3 className="font-bold text-slate-800 dark:text-slate-200 group-hover:text-slate-900 dark:text-white transition-colors">{mod.title}</h3>
                                             <p className="text-xs text-slate-500 mt-1">
                                                 {mod.type === 'video' ? `Video • ${mod.duration}` : `Document • ${mod.pages} pages`}
                                             </p>
@@ -247,22 +273,22 @@ const CourseMaterials = () => {
 
                 {/* AI Sidebar */}
                 {isAiOpen && (
-                    <div className="w-[350px] bg-slate-900 border-l border-slate-800 flex flex-col animate-in slide-in-from-right duration-300 absolute right-0 top-0 h-full shadow-2xl z-20 md:relative md:h-auto md:shadow-none md:border-l-0 md:border md:rounded-2xl">
-                        <div className="p-4 bg-gradient-to-r from-purple-900/50 to-slate-900 border-b border-slate-800 flex justify-between items-center">
-                            <div className="flex items-center gap-2 text-white font-bold">
+                    <div className="w-[350px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col animate-in slide-in-from-right duration-300 absolute right-0 top-0 h-full shadow-2xl z-20 md:relative md:h-auto md:shadow-none md:border-l-0 md:border md:rounded-2xl">
+                        <div className="p-4 bg-gradient-to-r from-purple-900/50 to-slate-900 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+                            <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold">
                                 <Bot className="text-purple-400" /> AI Study Buddy
                             </div>
-                            <button onClick={() => setIsAiOpen(false)} className="md:hidden text-slate-400 hover:text-white">
+                            <button onClick={() => setIsAiOpen(false)} className="md:hidden text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white">
                                 <X size={20} />
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/30">
+                        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-950/30">
                             {messages.map((msg) => (
                                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.sender === 'user'
-                                        ? 'bg-blue-600 text-white rounded-br-none'
-                                        : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
+                                        ? 'bg-blue-600 text-slate-900 dark:text-white rounded-br-none'
+                                        : 'bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-bl-none border border-slate-300 dark:border-slate-700'
                                         }`}>
                                         {msg.sender === 'ai' ? (
                                             <div className="whitespace-pre-wrap">{msg.text}</div>
@@ -274,7 +300,7 @@ const CourseMaterials = () => {
                             ))}
                             {isLoading && (
                                 <div className="flex justify-start">
-                                    <div className="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-bl-none border border-slate-700">
+                                    <div className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-3 rounded-2xl rounded-bl-none border border-slate-300 dark:border-slate-700">
                                         <Loader2 className="animate-spin" size={16} />
                                     </div>
                                 </div>
@@ -282,7 +308,7 @@ const CourseMaterials = () => {
                             <div ref={chatEndRef} />
                         </div>
 
-                        <div className="p-3 bg-slate-900 border-t border-slate-800">
+                        <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
                             <div className="relative">
                                 <input
                                     type="text"
@@ -290,13 +316,13 @@ const CourseMaterials = () => {
                                     onChange={(e) => setInput(e.target.value)}
                                     placeholder="Ask anything..."
                                     disabled={isLoading}
-                                    className="w-full bg-slate-950 border border-slate-800 rounded-full pl-4 pr-10 py-2.5 text-sm text-white focus:border-purple-500 outline-none disabled:opacity-50"
+                                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white focus:border-purple-500 outline-none disabled:opacity-50"
                                     onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                                 />
                                 <button
                                     onClick={handleSendMessage}
                                     disabled={isLoading}
-                                    className="absolute right-1 top-1 p-1.5 bg-purple-600 hover:bg-purple-500 text-white rounded-full transition-colors disabled:opacity-50"
+                                    className="absolute right-1 top-1 p-1.5 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white rounded-full transition-colors disabled:opacity-50"
                                 >
                                     <Send size={14} />
                                 </button>

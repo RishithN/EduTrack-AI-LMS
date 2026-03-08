@@ -1,0 +1,148 @@
+# Comprehensive Guide to Data Structures and Algorithms (DSA)
+
+---
+
+## Chapter 1: Introduction to Data Structures
+
+Data structures are specialized formats for organizing, storing, and managing data efficiently. They provide a means to handle large amounts of data seamlessly and perform operations like insertion, retrieval, and sorting swiftly.
+
+### 1.1 Types of Data Structures
+
+1. **Linear Data Structures**: Data elements are arranged sequentially or linearly, where each element is attached to its previous and next adjacent elements. Examples include Arrays, Linked Lists, Stacks, and Queues.
+2. **Non-Linear Data Structures**: Data elements are not placed sequentially or linearly. Examples include Trees and Graphs.
+
+---
+
+## Chapter 2: Arrays
+
+An array is a collection of items stored at contiguous memory locations. The idea is to store multiple items of the same type together. This makes it easier to calculate the position of each element by simply adding an offset to a base value.
+
+### 2.1 Properties of Arrays
+- Arrays use contiguous memory spaces. 
+- You can access any element randomly using its index (e.g., `arr[3]`).
+- Time complexity for accessing an element is always O(1).
+- Time complexity for inserting an element at the beginning or middle is O(n), because subsequent elements must be shifted.
+
+### 2.2 Advantages and Disadvantages
+The primary advantage is fast, random access to elements. The primary disadvantage is rigid structure; arrays generally have a fixed size in memory (except dynamic arrays like Vectors in C++ or ArrayLists in Java), making memory reallocation expensive when it gets full.
+
+---
+
+## Chapter 3: Linked Lists
+
+A linked list is a linear data structure, in which the elements are not stored at contiguous memory locations. The elements in a linked list are linked using pointers.
+
+### 3.1 Components
+A typical node in a linked list contains two parts:
+1. **Data**: The actual value or information stored.
+2. **Next Pointer (or Reference)**: A memory address point to the next node in the sequence.
+
+### 3.2 Types of Linked Lists
+- **Singly Linked List**: Traverses data only in one direction.
+- **Doubly Linked List**: Contains an extra pointer, typically called `previous pointer`, which allows forward and backward traversal.
+- **Circular Linked List**: The last node points back to the first node, creating a circle.
+
+Unlike arrays, insertion and deletion (if the node location is known) are O(1) in a linked list because you only need to update the pointers. However, searching for a specific value is O(n).
+
+---
+
+## Chapter 4: Stacks
+
+A stack is a linear data structure that follows a particular order in which the operations are performed. The order may be LIFO (Last In First Out) or FILO (First In Last Out).
+
+### 4.1 Key Operations
+- **Push**: Adds an item to the stack. If the stack is full, it is said to be an Overflow condition.
+- **Pop**: Removes an item from the stack. The items are popped in the reversed order in which they are pushed. If the stack is empty, it is an Underflow condition.
+- **Peek / Top**: Returns the top element of stack.
+- **isEmpty**: Returns true if stack is empty, else false.
+
+### 4.2 Use Cases
+Stacks are heavily used in modern computing for mechanisms such as:
+1. Browser History (Back button functionality)
+2. Undo mechanisms in text editors
+3. Call stacks in memory to manage function invocations during runtime.
+4. Parsing expressions (e.g., converting Infix notation to Postfix notation).
+
+---
+
+## Chapter 5: Queues
+
+A Queue is a linear structure which follows a particular order in which the operations are performed. The order is First In First Out (FIFO). A good example of a queue is any queue of consumers for a resource where the consumer that came first is served first.
+
+### 5.1 Types of Queues
+- **Simple Queue**: Strict FIFO approach.
+- **Circular Queue**: The last position is connected back to the first position to make a circle. This utilizes memory better when items are continuously added and removed.
+- **Priority Queue**: Elements have a priority assigned to them. An element with high priority is dequeued before an element with low priority.
+
+### 5.2 Real-World Applications
+Queues are pivotal in scenarios like:
+- **CPU Scheduling**: Managing tasks waiting for processor time.
+- **Disk Scheduling**: Order of reads/writes to hard drives.
+- **Print Spooling**: Managing jobs sent to a printer.
+
+---
+
+## Chapter 6: Trees
+
+A Tree is a non-linear data structure that simulates a hierarchical tree structure, with a root value and subtrees of children with a parent node, represented as a set of linked nodes.
+
+### 6.1 Tree Terminology
+- **Root**: The topmost node of the tree.
+- **Edge**: The link between any two nodes.
+- **Leaf Node**: Nodes without any children are known as leaf or terminal nodes.
+- **Internal Node**: Nodes with at least one child.
+- **Height of a Tree**: The length of the longest path from the root to a leaf.
+
+### 6.2 Binary Search Trees (BST) 
+A Binary Search Tree is a binary tree with the following properties:
+- The left subtree of a node contains only nodes with keys lesser than the node’s key.
+- The right subtree of a node contains only nodes with keys greater than the node’s key.
+- The left and right subtree each must also be a binary search tree.
+
+In a perfectly balanced BST, searching, insertion, and deletion all take O(log n) time. However, if the tree becomes unbalanced (like a straight line), it degrades to O(n) performance.
+
+---
+
+## Chapter 7: Hash Tables
+
+Hashing is a technique that is used to uniquely identify a specific object from a group of similar objects. In hashing, large keys are converted into small keys by using hash functions.
+
+### 7.1 Collision Resolution
+When the hash function generates the same index for multiple keys, it creates a "collision".
+- **Separate Chaining**: Making each cell of the hash table point to a linked list of records that have the same hash function value.
+- **Open Addressing**: If a collision occurs, find another open slot in the array (e.g., Linear Probing, Quadratic Probing).
+
+Hash tables provide incredible lookup times; an ideal hash table operates at O(1) for retrieving data.
+
+---
+
+## Chapter 8: Algorithm Complexity (Big O Notation)
+
+Big O notation is a mathematical notation that describes the limiting behavior of a function when the argument tends towards a particular value or infinity. In computer science, Big O is used to classify algorithms according to how their run time or space requirements grow as the input size grows.
+
+### 8.1 Common Classifications
+- **O(1) - Constant Time**: Algorithm takes the same amount of time regardless of input size (e.g., accessing an array index).
+- **O(log n) - Logarithmic Time**: Time goes up linearly while the 'n' goes up exponentially (e.g., Binary Search).
+- **O(n) - Linear Time**: Performance is directly proportional to the size of the input data set (e.g., simple for-loop iterating over an array).
+- **O(n log n) - Linearithmic Time**: Commonly seen in fast sorting algorithms like Merge Sort and Quick Sort.
+- **O(n^2) - Quadratic Time**: Performance is proportional to the square of the size of the input (e.g., Bubble Sort, Insertion Sort).
+
+---
+
+## Chapter 9: Sorting Algorithms
+
+Sorting is the process of arranging a collection of items systematically.
+
+### 9.1 Bubble Sort
+Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. 
+- Time Complexity: O(n^2) worst/average cases. Extremely slow for large datasets.
+
+### 9.2 Merge Sort
+Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves.
+- Time Complexity: O(n log n) in all cases (worst, average, and best). Very consistent and powerful.
+
+---
+
+## Chapter 10: Conclusion and Practical Usage
+
+Mastering Data Structures and Algorithms requires not just memorization, but understanding the trade-offs of memory vs. speed. For instance, choosing an Array over a Linked List depends entirely on whether your application performs more "lookups" or more "insertions". Developing the intuition to pick the right tool for the job is the mark of a senior engineer.

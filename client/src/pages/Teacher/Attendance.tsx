@@ -103,7 +103,7 @@ const TeacherAttendance = () => {
                         </select>
 
                         <div className="relative flex-1 md:w-64">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search student..."
@@ -157,10 +157,10 @@ const TeacherAttendance = () => {
                                 </div>
 
                                 <div className={`h-8 w-8 rounded-full flex items-center justify-center transition-colors ${status === 'present'
-                                    ? 'bg-emerald-500 text-white'
+                                    ? 'bg-emerald-500 text-slate-900 dark:text-white'
                                     : status === 'absent'
-                                        ? 'bg-red-500 text-white'
-                                        : 'bg-slate-100 text-slate-300 dark:bg-slate-800 dark:text-slate-600 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
+                                        ? 'bg-red-500 text-slate-900 dark:text-white'
+                                        : 'bg-slate-100 text-slate-700 dark:text-slate-300 dark:bg-slate-800 dark:text-slate-600 group-hover:bg-slate-200 dark:group-hover:bg-slate-100 dark:bg-slate-700'
                                     }`}>
                                     <Check size={18} />
                                 </div>
@@ -172,7 +172,7 @@ const TeacherAttendance = () => {
                 <div className="flex justify-end gap-3 pt-4">
                     <button
                         onClick={saveAttendance}
-                        className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-lg shadow-blue-600/20 transition-all transform hover:scale-105"
+                        className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold rounded-lg shadow-lg shadow-blue-600/20 transition-all transform hover:scale-105"
                     >
                         Save Attendance
                     </button>

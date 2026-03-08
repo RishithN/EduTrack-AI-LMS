@@ -3,9 +3,15 @@ import ProfileCard from '../../components/Student/ProfileCard';
 import CourseList from '../../components/Student/CourseList';
 import { useUser } from '../../hooks/useUser';
 import { Loader2 } from 'lucide-react';
+import { getOverallAttendance } from '../../data/mockTimetable';
 
 const StudentDashboard = () => {
     const { user, profile, loading } = useUser();
+
+    const attendanceData = getOverallAttendance();
+    const totalClasses = attendanceData.reduce((acc, curr) => acc + curr.total, 0);
+    const attendedClasses = attendanceData.reduce((acc, curr) => acc + curr.attended, 0);
+    const overallAttendance = totalClasses > 0 ? ((attendedClasses / totalClasses) * 100).toFixed(0) : '0';
 
     if (loading) {
         return (
@@ -42,8 +48,8 @@ const StudentDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl shadow-sm dark:shadow-none transition-colors">
                         <div className="text-slate-500 dark:text-slate-400 text-sm mb-1">Attendance</div>
-                        <div className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">85%</div>
-                        <div className="text-xs text-slate-500 mt-1">Excellent</div>
+                        <div className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">{overallAttendance}%</div>
+                        <div className="text-xs text-slate-500 mt-1">{parseInt(overallAttendance) > 75 ? 'Excellent' : 'Needs Improvement'}</div>
                     </div>
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl shadow-sm dark:shadow-none transition-colors">
                         <div className="text-slate-500 dark:text-slate-400 text-sm mb-1">CGPA</div>

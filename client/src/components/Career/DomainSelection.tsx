@@ -22,8 +22,8 @@ const DomainSelection = ({ onSelectDomain }: DomainSelectionProps) => {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-500">
             <div className="text-center space-y-4">
-                <h2 className="text-4xl font-bold text-white">Choose Your Career Domain</h2>
-                <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+                <h2 className="text-4xl font-bold text-slate-900 dark:text-white">Choose Your Career Domain</h2>
+                <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
                     Select the domain that excites you most. We'll tailor your assessment and recommendations accordingly.
                 </p>
             </div>
@@ -45,14 +45,14 @@ const DomainSelection = ({ onSelectDomain }: DomainSelectionProps) => {
                                 <div className={`p-4 rounded-xl ${domain.gradient} border ${domain.border}`}>
                                     <domain.icon className={domain.iconColor} size={32} />
                                 </div>
-                                <ArrowRight className="text-slate-500 group-hover:text-white group-hover:translate-x-1 transition-all" size={24} />
+                                <ArrowRight className="text-slate-500 group-hover:text-slate-900 dark:text-white group-hover:translate-x-1 transition-all" size={24} />
                             </div>
 
-                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-white group-hover:to-slate-300 transition-all">
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-white group-hover:to-slate-300 transition-all">
                                 {domain.name}
                             </h3>
 
-                            <p className="text-slate-400 mb-4 group-hover:text-slate-300 transition-colors">
+                            <p className="text-slate-600 dark:text-slate-400 mb-4 group-hover:text-slate-700 dark:text-slate-300 transition-colors">
                                 {domain.description}
                             </p>
 
@@ -60,7 +60,7 @@ const DomainSelection = ({ onSelectDomain }: DomainSelectionProps) => {
                                 {domain.roles.map((role) => (
                                     <span
                                         key={`${role}-${index}`}
-                                        className="px-3 py-1 bg-slate-900/50 text-slate-300 rounded-full text-sm border border-slate-800 group-hover:border-slate-700 transition-colors"
+                                        className="px-3 py-1 bg-slate-100/70 dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 rounded-full text-sm border border-slate-200 dark:border-slate-800 group-hover:border-slate-300 dark:border-slate-700 transition-colors"
                                     >
                                         {role}
                                     </span>
